@@ -10,6 +10,7 @@ contract CodeConstants{
     uint256 public constant MAINNET_CHAINID = 1;
     uint256 public constant SEPOLIA_CHAINID = 11155111;
     uint256 public constant NO_OF_TOKENS_EXPECTED = 2;
+    uint256 public constant INITIAL_SUPPLy = 100;
 
 }
 

@@ -16,8 +16,8 @@ contract DeployDsc is Script {
     function run() external returns (DecentralizedStableCoin, DscEngine,HelperConfig.NetworkConfig memory) {
         
         HelperConfig.NetworkConfig memory config = getConstructorArguments();
-        tokenAddresses = [config.wBtc, config.wEth];
-        priceFeedAddresses = [config.btcUsd, config.ethUsd];
+        tokenAddresses = [config.wEth,config.wBtc];
+        priceFeedAddresses = [config.ethUsd,config.btcUsd];
         vm.startBroadcast(config.deployerAccount);
         // creationg of dsc
         decentralizedStableCoin = new DecentralizedStableCoin();

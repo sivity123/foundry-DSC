@@ -8,3 +8,6 @@
 3) This stableCoin will be backed with exogenous collateral as base with crypto.(Collateral Type)
     1) ETH
     2) BTC
+
+irresolved Bugs:
+1) _healthFactor function get the ration comparing with minted Dsc, if DSC is 0, it will revert with divsion by zero panic error.
