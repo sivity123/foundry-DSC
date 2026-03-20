@@ -13,6 +13,12 @@ contract DeployDsc is Script {
     address[] tokenAddresses;
     address[] priceFeedAddresses;
 
+    uint256 dummy;
+    uint256 dummy2;
+    uint256 dummy3;
+
+
+
     function run() external returns (DecentralizedStableCoin, DscEngine,HelperConfig.NetworkConfig memory) {
         
         HelperConfig.NetworkConfig memory config = getConstructorArguments();

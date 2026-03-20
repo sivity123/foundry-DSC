@@ -34,6 +34,7 @@ address wBtc;
 
 
     }
+    
     function invariant_testProtocalHasMoreCollateralValueThanDebt()public view{
         //arrange 
         uint256 wEthCollateralBalance = IERC20(wEth).balanceOf(address(dscEngine));

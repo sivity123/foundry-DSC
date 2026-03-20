@@ -52,7 +52,7 @@ contract DscEngine is ReentrancyGuard {
     error DSCEngine__mustBeMoreThanZero();
     error DSCEngine__mustHaveEqualLengthBetweenTokenAndPriceFeedAddresses();
     error DSCEngine__InValidToken();
-    error DSCEngine__MustMaintainMinimumHealthFactor(uint256 healthFactor);
+    error DSCEngine__MustMaintainMinimumHealthFactor();
     error DSCEngine__MintFailed();
     error DSCEngine__TransferFailed();
     error DSCEngine__HealthFactorIsFine();
@@ -230,8 +230,8 @@ contract DscEngine is ReentrancyGuard {
      * user who failse to maintain threshhold policy.
      * @notice - you can partially liquidate the user by covering the user's debt.
      * @notice a Known bug would be if the protocal is 100% or undercollaterlized, then we wouldn't
-     * be able to incentivice liquidators.
-     * CEI - Follows the Checks,Effects and interactions.
+     * be able to incentivize liquidators.
+     * @dev - CEI - Follows the Checks,Effects and interactions pattern.
      */
 
     function liquidate(address _collateralTokenAddress, address _user, uint256 _amountOfDebtToCover) external {
@@ -311,7 +311,7 @@ contract DscEngine is ReentrancyGuard {
     function _revertPoorUserHealthFactor(address _user) internal view {
         uint256 healthFactor = _healthFactor(_user);
         if (healthFactor < (MIN_HEALTH_FACTOR)) {
-            revert DSCEngine__MustMaintainMinimumHealthFactor(healthFactor);
+            revert DSCEngine__MustMaintainMinimumHealthFactor();
         }
     }
 

@@ -270,4 +270,21 @@ contract DscEngineTest is Test {
         uint256 usersEndingDscBalance = decentralizedStableCoin.balanceOf(user);
         assertEq(usersInitialDscBalance - BURN_AMOUNT, usersEndingDscBalance);
     }
+
+    function testRedeemCollateralRevertOnLeadingToPoorHealthFactor() public collateralDeposited{
+        uint256 userInitialWethBalance = ERC20Mock(wEth).balanceOf(user);
+        console.log("userInitialbalance : ",userInitialWethBalance);
+        vm.startPrank(user);
+        dscEngine.mintDsc(10000);// half of 20000usd values deposited into the protocal 
+        vm.expectRevert(DscEngine.DSCEngine__MustMaintainMinimumHealthFactor.selector);
+        dscEngine.redeemCollateral(wEth, 1);
+        uint256 userEndingBalance = ERC20Mock(wEth).balanceOf(user);
+        console.log("userEndingBalance : ",userEndingBalance);
+
+
+
+    }
 }
+
+
+
