@@ -27,7 +27,6 @@ pragma solidity ^0.8.19;
 import {ERC20, ERC20Burnable} from "@openzeppelin/contracts/token/ERC20//extensions/ERC20Burnable.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-
 /**
  * @title - Denctralize stableCoin
  * @author - Sivanesh Sakthivel
@@ -50,7 +49,8 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
 
     constructor() ERC20("DecentralizedStableCoin", "DSC") Ownable(msg.sender) {}
 
-    function burn(uint256 _value) public override onlyOwner {//still owner cannot burn the user value directly 
+    function burn(uint256 _value) public override onlyOwner {
+        //still owner cannot burn the user value directly
         uint256 balance = balanceOf(msg.sender);
         if (balance < _value) {
             revert DecentralizedStableCoin__BurnValueExceedsUserBalance();
@@ -61,24 +61,15 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
         super.burn(_value);
     }
 
-    function mint(address _to,uint256 _value) external onlyOwner returns(bool){
-        if(_to == address(0)){
+    function mint(address _to, uint256 _value) external onlyOwner returns (bool) {
+        if (_to == address(0)) {
             revert DecentralizedStableCoin__MustBeANonZeroAddress();
         }
-        if(_value <= 0){
+        if (_value <= 0) {
             revert DecentralizedStableCoin__ExpectsMoreThanZeroValue();
         }
-        _mint(_to,_value);
+        _mint(_to, _value);
         return true;
     }
-
-
 }
-
-
-
-
-
-
-
 

@@ -59,7 +59,6 @@ contract DscEngine is ReentrancyGuard {
     error DSCEngine__HealthFactorNotImproved();
     error DSCEngine__InsufficientCollateral();
 
-
     //////////
     // Type
     /////////
@@ -221,7 +220,7 @@ contract DscEngine is ReentrancyGuard {
     function burnDsc(uint256 _amountOfDsc) public {
         _burnDsc(_amountOfDsc, msg.sender, msg.sender);
         _revertPoorUserHealthFactor(msg.sender); // never going to revert - think about pulling at
-            // the time auditing.
+        // the time auditing.
     } // To maintain over-collateralization.
     /**
      * @param _collateralTokenAddress - The Collateral token address(ex:wEth).
@@ -273,7 +272,8 @@ contract DscEngine is ReentrancyGuard {
         internal
     {
         // _from is the bad user whose collateral is being redeemed by the liquidator(_to)
-        if (s_collateralDeposited[_from][_collateralTokenAddress] < _amountOfCollateral) {//
+        if (s_collateralDeposited[_from][_collateralTokenAddress] < _amountOfCollateral) {
+            //
             revert DSCEngine__InsufficientCollateral();
         }
         s_collateralDeposited[_from][_collateralTokenAddress] -= _amountOfCollateral;
@@ -296,16 +296,16 @@ contract DscEngine is ReentrancyGuard {
         /*EX: 1000 DSC,2000 USD (collateral in ETH)
         2000*50 => 100000/100 => 1000*precsion(1e18)/totalDsc(1000 usd) = 0 (without precision)
 
-        ex:2 
+        ex:2
         1500USD,100 DSC
         1500*50 => 75000/100 => 750*precision /100 DSc => 75*1e17.
 
-        ex:3 
+        ex:3
         34000USD,15000 DSC
         34000*50 =>170000 /100 => 17000 *1e18/15000  => 1133e15
         */
         return healthFactor; // if totalDsc is 0 , will revert on panic error.
-            //stating division by zero.
+        //stating division by zero.
     }
 
     function _revertPoorUserHealthFactor(address _user) internal view {
@@ -387,11 +387,7 @@ contract DscEngine is ReentrancyGuard {
         return s_collateralDeposited[_user][_collateralTokenAddress];
     }
 
-    function checkHealthFactor(uint256 _totalDscMinted, uint256 _collateralValueInUsd)
-        external
-        pure
-        returns (uint256)
-    {
+    function checkHealthFactor(uint256 _totalDscMinted, uint256 _collateralValueInUsd) external pure returns (uint256) {
         return _checkHealthFactor(_totalDscMinted, _collateralValueInUsd);
     }
 
@@ -399,16 +395,16 @@ contract DscEngine is ReentrancyGuard {
         return s_dscMinted[_user];
     }
 
-    function getCollateralTokens() external view returns(address[] memory){
+    function getCollateralTokens() external view returns (address[] memory) {
         return s_collateralTokens;
     }
 
-    function getUserCollateralAmount(address _tokenAddress,address _user)public view returns(uint256){
+    function getUserCollateralAmount(address _tokenAddress, address _user) public view returns (uint256) {
         return s_collateralDeposited[_user][_tokenAddress];
     }
-    function getCollateralTokenPriceFeed(address _tokenAddress) public view returns(address) {
+
+    function getCollateralTokenPriceFeed(address _tokenAddress) public view returns (address) {
         return s_priceFeed[_tokenAddress];
-        
     }
 
     // 50dsc => 150Dollers(1ETH).

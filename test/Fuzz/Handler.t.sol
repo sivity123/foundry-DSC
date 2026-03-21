@@ -73,14 +73,15 @@ contract Handler is Test {
     }
 
     function redeemCollateral(uint256 _senderAddressSeed, uint256 _collateralAddressSeed, uint256 _collateralAmount)
-        public returns(uint256)
+        public
+        returns (uint256)
     {
         if (userWithDepositedCollateral.length == 0) return 0;
         address sender = userWithDepositedCollateral[_senderAddressSeed % userWithDepositedCollateral.length];
         ERC20Mock collateral = _pickCollateralAddressFromSeed(_collateralAddressSeed);
 
         (uint256 dscMinted, uint256 totalCollateralValueInUsd) = dscEngine.getAccountInformations(sender);
-        uint256 usdValueOfRedeemableCollateral = totalCollateralValueInUsd - (dscMinted*2);
+        uint256 usdValueOfRedeemableCollateral = totalCollateralValueInUsd - (dscMinted * 2);
         //redeemableValue collateral value In usd. 2000 usd
 
         uint256 maxRedeemableCollateralAmount =
@@ -88,8 +89,8 @@ contract Handler is Test {
         //max redeemable collateral is combination of both collateral() 1 eth
         uint256 maxCollateralAmount = dscEngine.getUserCollateralAmount(address(collateral), sender);
         // 0.5 eth
-        if(maxRedeemableCollateralAmount > maxCollateralAmount) return 0;
-        if(maxRedeemableCollateralAmount == 0) return 0;
+        if (maxRedeemableCollateralAmount > maxCollateralAmount) return 0;
+        if (maxRedeemableCollateralAmount == 0) return 0;
         _collateralAmount = bound(_collateralAmount, 1, maxRedeemableCollateralAmount);
 
         vm.startPrank(sender);
@@ -101,7 +102,6 @@ contract Handler is Test {
     // function updatePriceFeedAnswer(uint32 _price) public {
     //     int256 price = int256(uint256(_price));
     //     ethUsdPriceFeed.updateAnswer(price);
-    // } 
+    // }
 }
-
 

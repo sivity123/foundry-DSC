@@ -17,13 +17,10 @@ contract DeployDsc is Script {
     uint256 dummy2;
     uint256 dummy3;
 
-
-
-    function run() external returns (DecentralizedStableCoin, DscEngine,HelperConfig.NetworkConfig memory) {
-        
+    function run() external returns (DecentralizedStableCoin, DscEngine, HelperConfig.NetworkConfig memory) {
         HelperConfig.NetworkConfig memory config = getConstructorArguments();
-        tokenAddresses = [config.wEth,config.wBtc];
-        priceFeedAddresses = [config.ethUsd,config.btcUsd];
+        tokenAddresses = [config.wEth, config.wBtc];
+        priceFeedAddresses = [config.ethUsd, config.btcUsd];
         vm.startBroadcast(config.deployerAccount);
         // creationg of dsc
         decentralizedStableCoin = new DecentralizedStableCoin();
@@ -33,11 +30,11 @@ contract DeployDsc is Script {
         // transfering the dsc ownership to dscEngine to ensure engine can only acess specific functions like mint and burn.
         decentralizedStableCoin.transferOwnership(address(dscEngine));
         vm.stopBroadcast();
-        return (decentralizedStableCoin, dscEngine,config);
+        return (decentralizedStableCoin, dscEngine, config);
     }
 
-    function getConstructorArguments() public returns ( HelperConfig.NetworkConfig memory) {
+    function getConstructorArguments() public returns (HelperConfig.NetworkConfig memory) {
         HelperConfig helperConfig = new HelperConfig();
-        return ( helperConfig.getConfig());
+        return (helperConfig.getConfig());
     }
 }

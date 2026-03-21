@@ -52,16 +52,16 @@ contract Handler is Test {
         }
     }
 
-    function redeemCollateral(uint256 _collateralSeed, uint256 _collateralAmount,uint256 _senderAddressFeed) public {
+    function redeemCollateral(uint256 _collateralSeed, uint256 _collateralAmount, uint256 _senderAddressFeed) public {
         ERC20Mock collateral = _pickRandomCollateralAddressFromSeed(_collateralSeed);
-        if(usersWithDepositedCollateral.length == 0)return ;
-        address sender = usersWithDepositedCollateral[_senderAddressFeed% usersWithDepositedCollateral.length];
-        uint256 maxCollateralAmount  = dscEngine.getUserCollateralAmount(address(collateral),sender);
+        if (usersWithDepositedCollateral.length == 0) return;
+        address sender = usersWithDepositedCollateral[_senderAddressFeed % usersWithDepositedCollateral.length];
+        uint256 maxCollateralAmount = dscEngine.getUserCollateralAmount(address(collateral), sender);
         _collateralAmount = bound(_collateralAmount, 0, maxCollateralAmount);
         //  vm.assume(_collateralAmount != 0); //if the condition fails to be true, This will let the
         // fuzzer to discard this function call
-        if(_collateralAmount == 0){
-            return ;
+        if (_collateralAmount == 0) {
+            return;
         }
         vm.prank(sender);
         dscEngine.redeemCollateral(address(collateral), _collateralAmount);
@@ -70,7 +70,7 @@ contract Handler is Test {
 
     function mintDsc(uint256 _dscAmount, uint256 _senderAddressFeed) public {
         timesDscMinted3++;
-        if(usersWithDepositedCollateral.length == 0)return ;
+        if (usersWithDepositedCollateral.length == 0) return;
         address sender = usersWithDepositedCollateral[_senderAddressFeed % usersWithDepositedCollateral.length];
         // _dscAmount = bound(_dscAmount,1,MAX_32_BYTE_SIZE);
         (uint256 totalDscMinted, uint256 totalCollateralValueInUsd) = dscEngine.getAccountInformations(sender);
@@ -83,16 +83,13 @@ contract Handler is Test {
         // }
         vm.assume(maxDscToMint >= 0);
         _dscAmount = bound(_dscAmount, 0, uint256(maxDscToMint));
-         timesDscMinted2++;
+        timesDscMinted2++;
         // if(_dscAmount == 0){
         //     return ;
         // }
         vm.assume(_dscAmount != 0);
-        
+
         vm.prank(sender);
         dscEngine.mintDsc(_dscAmount);
-       
-        
-        
     }
 }
