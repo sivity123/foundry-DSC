@@ -5,7 +5,8 @@ pragma solidity ^0.8.19;
 import {Test, console} from "forge-std/Test.sol";
 import {DecentralizedStableCoin} from "src/DecentralizedStableCoin.sol";
 import {DscEngine} from "src/DscEngine.sol";
-import {ERC20Mock} from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
+import {ERC20Mock} from "test/mocks/ERC20Mock.sol";
+
 
 contract Handler is Test {
     uint32 private constant MAX_32_BYTE_SIZE = type(uint32).max;

@@ -7,7 +7,7 @@ import {DeployDsc} from "script/DeployDsc.s.sol";
 import {HelperConfig} from "script/HelperConfig.s.sol";
 import {DecentralizedStableCoin} from "src/DecentralizedStableCoin.sol";
 import {DscEngine} from "src/DscEngine.sol";
-import {ERC20Mock} from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
+import {ERC20Mock} from "test/mocks/ERC20Mock.sol";
 import {IERC20Errors} from "@openzeppelin/contracts/interfaces/draft-IERC6093.sol";
 
 contract DscEngineTest is Test {

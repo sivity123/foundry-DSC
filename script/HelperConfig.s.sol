@@ -3,7 +3,8 @@ pragma solidity ^0.8.19;
 
 import {Script} from "forge-std/Script.sol";
 import {MockV3Aggregator} from "test/mocks/MockV3Aggregator.sol";
-import {ERC20Mock} from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
+import {ERC20Mock} from "test/mocks/ERC20Mock.sol";
+
 
 contract CodeConstants {
     uint256 public constant ANVIL_CHAINID = 31337;
@@ -57,8 +58,7 @@ contract HelperConfig is Script, CodeConstants {
         address BtcForUsd = 0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c;
         address account = 0x2974BA6bB2026C3Bd9dE2805Fc149168bFAc470F;
 
-        networkConfig =
-            NetworkConfig({
+        networkConfig = NetworkConfig({
             wBtc: wrappedBtc, wEth: wrappedEth, ethUsd: EthForUsd, btcUsd: BtcForUsd, deployerAccount: account
         });
     }
@@ -69,8 +69,7 @@ contract HelperConfig is Script, CodeConstants {
         address EthForUsd = 0x694AA1769357215DE4FAC081bf1f309aDC325306;
         address BtcForUsd = 0xA39434A63A52E749F02807ae27335515BA4b07F7;
         address account = 0x2974BA6bB2026C3Bd9dE2805Fc149168bFAc470F;
-        networkConfig =
-            NetworkConfig({
+        networkConfig = NetworkConfig({
             wBtc: wrappedBtc, wEth: wrappedEth, ethUsd: EthForUsd, btcUsd: BtcForUsd, deployerAccount: account
         });
     }
